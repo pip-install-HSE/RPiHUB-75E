@@ -54,8 +54,8 @@ GREEN = 1
 BLUE = 2
 FRAME_REPEAT = 5
 DISPLAY_FRAMES = 4
-DISPLAY_COLS = 64
-DISPLAY_ROWS = 32
+DISPLAY_COLS = 104
+DISPLAY_ROWS = 52
 
 
 # PyGame used to read image files from storage.
@@ -70,7 +70,7 @@ RPi.GPIO.setup(HUB75E_B1, RPi.GPIO.OUT, initial=0)
 RPi.GPIO.setup(HUB75E_R2, RPi.GPIO.OUT, initial=0)
 RPi.GPIO.setup(HUB75E_G2, RPi.GPIO.OUT, initial=0)
 RPi.GPIO.setup(HUB75E_B2, RPi.GPIO.OUT, initial=0)
-# RPi.GPIO.setup(HUB75E_E, RPi.GPIO.OUT, initial=0)
+RPi.GPIO.setup(HUB75E_E, RPi.GPIO.OUT, initial=0)
 RPi.GPIO.setup(HUB75E_A, RPi.GPIO.OUT, initial=0)
 RPi.GPIO.setup(HUB75E_B, RPi.GPIO.OUT, initial=0)
 RPi.GPIO.setup(HUB75E_C, RPi.GPIO.OUT, initial=0)
@@ -120,7 +120,7 @@ while True:
       RPi.GPIO.output(HUB75E_B, Row & 2)
       RPi.GPIO.output(HUB75E_C, Row & 4)
       RPi.GPIO.output(HUB75E_D, Row & 8)
-#      RPi.GPIO.output(HUB75E_E, Row & 16)
+      RPi.GPIO.output(HUB75E_E, Row & 16)
 
       SelRow = Row + 1
       if SelRow > (DISPLAY_ROWS / 2) - 1:
@@ -132,9 +132,9 @@ while True:
          RPi.GPIO.output(HUB75E_B1, DisplayImage[Frame][SelRow][Col][BLUE])
 
          # Load bits into bottom row set.
-         RPi.GPIO.output(HUB75E_R2, DisplayImage[Frame][SelRow + 16][Col][RED])
-         RPi.GPIO.output(HUB75E_G2, DisplayImage[Frame][SelRow + 16][Col][GREEN])
-         RPi.GPIO.output(HUB75E_B2, DisplayImage[Frame][SelRow + 16][Col][BLUE])
+         RPi.GPIO.output(HUB75E_R2, DisplayImage[Frame][SelRow + (DISPLAY_ROWS / 2)][Col][RED])
+         RPi.GPIO.output(HUB75E_G2, DisplayImage[Frame][SelRow + (DISPLAY_ROWS / 2)][Col][GREEN])
+         RPi.GPIO.output(HUB75E_B2, DisplayImage[Frame][SelRow + (DISPLAY_ROWS / 2)][Col][BLUE])
 
          # While clocking in new bit data.
          # Refresh existing display data on the current output row.
