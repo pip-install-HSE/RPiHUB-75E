@@ -1,0 +1,4 @@
+imagio
+RPi.GPIO
+pygame
+image-slicer
