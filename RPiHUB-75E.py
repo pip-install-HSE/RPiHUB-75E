@@ -103,7 +103,7 @@ Frame = 0
 FrameDirection = 1
 FrameRepeat = FRAME_REPEAT
 while True:
-    time.sleep(1000)
+    time.sleep(1)
     # Animate display frames.
     FrameRepeat -= 1
     if FrameRepeat < 1:

@@ -1,15 +1,13 @@
 import imageio
 import os
-import image_slicer
-image_slicer.slice('huge_test_image.png', 14)
 
 reader = imageio.get_reader('test.mp4')
 
-for frame_number, im in enumerate(reader):
-    for tile_number, p in enumerate(tiles):
-        try:
-            imageio.imwrite(f'test_split/frame_{frame_number}_{tile_number}.jpg', im)
-        except FileNotFoundError:
-            os.mkdir('test_split')
-            imageio.imwrite(f'test_split/frame_{frame_number}_{tile_number}.jpg', im)
+os.mkdir('test_split')
 
+for frame_number, im in enumerate(reader):
+    M = im.shape[0] // 1
+    N = im.shape[1] // 4
+    tiles = [im[x:x + M, y:y + N] for x in range(0, im.shape[0], M) for y in range(0, im.shape[1], N)]
+    for tile_number, p in enumerate(tiles):
+        imageio.imwrite(f'test_split/frame_{frame_number}_{tile_number}.jpg', p)
