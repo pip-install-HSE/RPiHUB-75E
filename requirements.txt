@@ -1,4 +1,4 @@
-imagio
+imageio
 RPi.GPIO
 pygame
 image-slicer
