@@ -16,21 +16,20 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#/****************************************************************************/
-#/* RPiHUB-75E - Driving a HUB-75E 64x32 LED Matrix Animation.               */
-#/* ------------------------------------------------------------------------ */
-#/* V1.00 - 2020-04-14 - Jason Birch                                         */
-#/* ------------------------------------------------------------------------ */
-#/* Python example to directly drive a HUB-75E 64x32 LED Matrix and display  */
-#/* an animated image.                                                       */
-#/****************************************************************************/
+# /****************************************************************************/
+# /* RPiHUB-75E - Driving a HUB-75E 64x32 LED Matrix Animation.               */
+# /* ------------------------------------------------------------------------ */
+# /* V1.00 - 2020-04-14 - Jason Birch                                         */
+# /* ------------------------------------------------------------------------ */
+# /* Python example to directly drive a HUB-75E 64x32 LED Matrix and display  */
+# /* an animated image.                                                       */
+# /****************************************************************************/
 
 
 import time
 import random
 import pygame
 import RPi.GPIO
-
 
 # GPIO pin assignments.
 HUB75E_R1 = 14
@@ -57,7 +56,6 @@ DISPLAY_FRAMES = 4
 DISPLAY_COLS = 104
 DISPLAY_ROWS = 52
 
-
 # PyGame used to read image files from storage.
 pygame.init()
 
@@ -80,6 +78,7 @@ RPi.GPIO.setup(HUB75E_LAT, RPi.GPIO.OUT, initial=0)
 RPi.GPIO.setup(HUB75E_OE, RPi.GPIO.OUT, initial=1)
 
 # Load animation image files.
+
 FrameImage = []
 FrameImage.append(pygame.image.load("FrameImage1.png"))
 FrameImage.append(pygame.image.load("FrameImage2.png"))
@@ -89,62 +88,61 @@ FrameImage.append(pygame.image.load("FrameImage4.png"))
 # Load a display frames from images.
 DisplayImage = []
 for Frame in range(DISPLAY_FRAMES):
-   DisplayImage.append([])
-   for Row in range(DISPLAY_ROWS):
-      DisplayImage[Frame].append([])
-      for Col in range(DISPLAY_COLS):
-         DisplayImage[Frame][Row].append([])
-         ColourValue = FrameImage[Frame].get_at((Col, Row))
-         DisplayImage[Frame][Row][Col].append(ColourValue[0] & 0x80)
-         DisplayImage[Frame][Row][Col].append(ColourValue[1] & 0x80)
-         DisplayImage[Frame][Row][Col].append(ColourValue[2] & 0x80)
+    DisplayImage.append([])
+    for Row in range(DISPLAY_ROWS):
+        DisplayImage[Frame].append([])
+        for Col in range(DISPLAY_COLS):
+            DisplayImage[Frame][Row].append([])
+            ColourValue = FrameImage[Frame].get_at((Col, Row))
+            DisplayImage[Frame][Row][Col].append(ColourValue[0] & 0x80)
+            DisplayImage[Frame][Row][Col].append(ColourValue[1] & 0x80)
+            DisplayImage[Frame][Row][Col].append(ColourValue[2] & 0x80)
 
 # Loop forever.
 Frame = 0
 FrameDirection = 1
 FrameRepeat = FRAME_REPEAT
 while True:
-   time.sleep(1000)
-   # Animate display frames.
-   FrameRepeat -= 1
-   if FrameRepeat < 1:
-      FrameRepeat = FRAME_REPEAT
-      Frame += FrameDirection
-      if Frame < 1 or Frame >= DISPLAY_FRAMES - 1:
-         FrameDirection *= -1
+    time.sleep(1000)
+    # Animate display frames.
+    FrameRepeat -= 1
+    if FrameRepeat < 1:
+        FrameRepeat = FRAME_REPEAT
+        Frame += FrameDirection
+        if Frame < 1 or Frame >= DISPLAY_FRAMES - 1:
+            FrameDirection *= -1
 
-   # Update LED Matrix.
-   for Row in range(DISPLAY_ROWS / 2):
-      # Select row to dispaly.
-      RPi.GPIO.output(HUB75E_A, Row & 1)
-      RPi.GPIO.output(HUB75E_B, Row & 2)
-      RPi.GPIO.output(HUB75E_C, Row & 4)
-      RPi.GPIO.output(HUB75E_D, Row & 8)
-      RPi.GPIO.output(HUB75E_E, Row & 16)
+    # Update LED Matrix.
+    for Row in range(DISPLAY_ROWS / 2):
+        # Select row to dispaly.
+        RPi.GPIO.output(HUB75E_A, Row & 1)
+        RPi.GPIO.output(HUB75E_B, Row & 2)
+        RPi.GPIO.output(HUB75E_C, Row & 4)
+        RPi.GPIO.output(HUB75E_D, Row & 8)
+        RPi.GPIO.output(HUB75E_E, Row & 16)
 
-      SelRow = Row + 1
-      if SelRow > (DISPLAY_ROWS / 2) - 1:
-         SelRow = 0
-      for Col in range(DISPLAY_COLS):
-         # Load bits into top row set.
-         RPi.GPIO.output(HUB75E_R1, DisplayImage[Frame][SelRow][Col][RED])
-         RPi.GPIO.output(HUB75E_G1, DisplayImage[Frame][SelRow][Col][GREEN])
-         RPi.GPIO.output(HUB75E_B1, DisplayImage[Frame][SelRow][Col][BLUE])
+        SelRow = Row + 1
+        if SelRow > (DISPLAY_ROWS / 2) - 1:
+            SelRow = 0
+        for Col in range(DISPLAY_COLS):
+            # Load bits into top row set.
+            RPi.GPIO.output(HUB75E_R1, DisplayImage[Frame][SelRow][Col][RED])
+            RPi.GPIO.output(HUB75E_G1, DisplayImage[Frame][SelRow][Col][GREEN])
+            RPi.GPIO.output(HUB75E_B1, DisplayImage[Frame][SelRow][Col][BLUE])
 
-         # Load bits into bottom row set.
-         RPi.GPIO.output(HUB75E_R2, DisplayImage[Frame][SelRow + (DISPLAY_ROWS / 2)][Col][RED])
-         RPi.GPIO.output(HUB75E_G2, DisplayImage[Frame][SelRow + (DISPLAY_ROWS / 2)][Col][GREEN])
-         RPi.GPIO.output(HUB75E_B2, DisplayImage[Frame][SelRow + (DISPLAY_ROWS / 2)][Col][BLUE])
+            # Load bits into bottom row set.
+            RPi.GPIO.output(HUB75E_R2, DisplayImage[Frame][SelRow + (DISPLAY_ROWS / 2)][Col][RED])
+            RPi.GPIO.output(HUB75E_G2, DisplayImage[Frame][SelRow + (DISPLAY_ROWS / 2)][Col][GREEN])
+            RPi.GPIO.output(HUB75E_B2, DisplayImage[Frame][SelRow + (DISPLAY_ROWS / 2)][Col][BLUE])
 
-         # While clocking in new bit data.
-         # Refresh existing display data on the current output row.
-         RPi.GPIO.output(HUB75E_OE, 0)
-         RPi.GPIO.output(HUB75E_CLK, 1)
-         RPi.GPIO.output(HUB75E_OE, 1)
-         RPi.GPIO.output(HUB75E_CLK, 0)
+            # While clocking in new bit data.
+            # Refresh existing display data on the current output row.
+            RPi.GPIO.output(HUB75E_OE, 0)
+            RPi.GPIO.output(HUB75E_CLK, 1)
+            RPi.GPIO.output(HUB75E_OE, 1)
+            RPi.GPIO.output(HUB75E_CLK, 0)
 
-      # When a pair of rows of display bits has been loaded.
-      # Latch the data into the output buffer.
-      RPi.GPIO.output(HUB75E_LAT, 1)
-      RPi.GPIO.output(HUB75E_LAT, 0)
-
+        # When a pair of rows of display bits has been loaded.
+        # Latch the data into the output buffer.
+        RPi.GPIO.output(HUB75E_LAT, 1)
+        RPi.GPIO.output(HUB75E_LAT, 0)
