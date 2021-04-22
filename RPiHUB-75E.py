@@ -39,7 +39,7 @@ HUB75E_B1 = 18
 HUB75E_R2 = 23
 HUB75E_G2 = 24
 HUB75E_B2 = 25
-# HUB75E_E = 8
+HUB75E_E = 8
 HUB75E_A = 7
 HUB75E_B = 12
 HUB75E_C = 16
@@ -104,6 +104,7 @@ Frame = 0
 FrameDirection = 1
 FrameRepeat = FRAME_REPEAT
 while True:
+   time.sleep(1000)
    # Animate display frames.
    FrameRepeat -= 1
    if FrameRepeat < 1:
