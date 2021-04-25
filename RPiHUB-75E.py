@@ -80,10 +80,10 @@ RPi.GPIO.setup(HUB75E_OE, RPi.GPIO.OUT, initial=1)
 # Load animation image files.
 
 FrameImage = []
-FrameImage.append(pygame.image.load("FrameImage1.png"))
-FrameImage.append(pygame.image.load("FrameImage2.png"))
-FrameImage.append(pygame.image.load("FrameImage3.png"))
-FrameImage.append(pygame.image.load("FrameImage4.png"))
+FrameImage.append(pygame.image.load("test_split/frame_0_0.jpg"))
+FrameImage.append(pygame.image.load("test_split/frame_0_1.jpg"))
+FrameImage.append(pygame.image.load("test_split/frame_0_2.jpg"))
+FrameImage.append(pygame.image.load("test_split/frame_0_3.jpg"))
 
 # Load a display frames from images.
 DisplayImage = []
